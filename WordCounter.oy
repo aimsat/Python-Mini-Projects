@@ -1,0 +1,53 @@
+import string
+
+# Function to count the number of words in the input text
+def count_words(text):
+    # Remove punctuation and split the text into words
+    cleaned_text = text.translate(str.maketrans('', '', string.punctuation))
+    words = cleaned_text.split()
+    return len(words)
+
+# Function to accept text from the user
+def input_text():
+    print("Enter your text below:")
+    return input()
+
+# Function to read text from a file
+def read_file(filename):
+    try:
+        with open(filename, 'r') as file:
+            return file.read()
+    except FileNotFoundError:
+        print(f"Error: The file '{filename}' was not found.")
+        return None
+
+# Main function to run the word counter
+def word_counter():
+    print("Word Counter")
+    print("Choose an option:")
+    print("1. Enter text manually")
+    print("2. Read text from a file")
+
+    while True:
+        try:
+            choice = int(input("Enter your choice (1 or 2): "))
+            if choice == 1:
+                text = input_text()
+                word_count = count_words(text)
+                print(f"\nThe text contains {word_count} words.")
+                break
+            elif choice == 2:
+                filename = input("Enter the filename: ")
+                text = read_file(filename)
+                if text is not None:
+                    word_count = count_words(text)
+                    print(f"\nThe file contains {word_count} words.")
+                break
+            else:
+                print("Invalid choice. Please enter 1 or 2.")
+        except ValueError:
+            print("Invalid input. Please enter a valid number (1 or 2).")
+
+# Start the word counter program
+if __name__ == "__main__":
+    word_counter()
